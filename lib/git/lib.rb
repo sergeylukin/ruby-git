@@ -442,6 +442,21 @@ module Git
       command('am', arr_opts)
     end
     
+    def apply_patch(rev1, rev2, opts = {})
+      arr_opts = []
+      arr_opts << '-k' if opts[:keep_subject]
+      arr_opts << '--stdout'
+      arr_opts << "#{rev1}..#{rev2}"
+      command('format-patch', arr_opts, true, '| git am')
+    end
+    
+    def check_patch(rev1, rev2)
+      arr_opts = []
+      arr_opts << '--stdout'
+      arr_opts << "#{rev1}..#{rev2}"
+      command('format-patch', arr_opts, true, '| git apply --check')
+    end
+    
     def stashes_all
       arr = []
       filename = File.join(@git_dir, 'logs/refs/stash')
