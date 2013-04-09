@@ -383,6 +383,14 @@ module Git
       self.lib.apply_mail(file) if File.exists?(file)
     end
     
+    def apply_patch(rev1, rev2, opts = {})
+      self.lib.apply_patch(rev1, rev2)
+    end
+    
+    def check_patch(rev1, rev2)
+      self.lib.check_patch(rev1, rev2)
+    end
+    
     ## LOWER LEVEL INDEX OPERATIONS ##
     
     def with_index(new_index) # :yields: new_index
