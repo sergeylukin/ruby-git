@@ -387,8 +387,8 @@ module Git
       self.lib.apply_patch(rev1, rev2)
     end
     
-    def check_patch(rev1, rev2)
-      self.lib.check_patch(rev1, rev2)
+    def patch_mergeable?(rev1, rev2)
+      self.lib.patch_mergeable?(rev1, rev2)
     end
     
     ## LOWER LEVEL INDEX OPERATIONS ##

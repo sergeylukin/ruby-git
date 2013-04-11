@@ -447,14 +447,15 @@ module Git
       arr_opts << '-k' if opts[:keep_subject]
       arr_opts << '--stdout'
       arr_opts << "#{rev1}..#{rev2}"
-      command('format-patch', arr_opts, true, '| git am')
+      command('format-patch', arr_opts, true, '| git am --3way')
     end
     
-    def check_patch(rev1, rev2)
+    def patch_mergeable?(rev1, rev2)
       arr_opts = []
       arr_opts << '--stdout'
       arr_opts << "#{rev1}..#{rev2}"
-      command('format-patch', arr_opts, true, '| git apply --check')
+      response = command('format-patch', arr_opts, true, '| git apply --check --3way')
+      response.match(/.*with conflicts/).nil?
     end
     
     def stashes_all
